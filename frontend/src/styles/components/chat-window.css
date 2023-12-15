@@ -1,0 +1,24 @@
+
+#chat-window {
+    padding-left: 0;
+}
+
+#chat-window-stack {
+    display: flex;
+    flex-direction: column;
+    height: 560px;
+}
+
+#message-box {
+    width: 100%; 
+}
+
+#chat-window-header {
+    border-bottom: #eceff1 solid;
+    border-width: thin;
+}
+
+#chat-window-messages {
+    flex: 1; /* Roztáhne se na zbývající dostupnou výšku */
+    overflow-y: scroll;
+}

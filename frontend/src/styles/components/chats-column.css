@@ -1,0 +1,18 @@
+
+#chats-column {
+    border-right: #0000002d solid;
+    border-width: thin;
+    padding-right: 0px;
+    height: 560px;
+    overflow-y: scroll;
+}
+
+/* custom-tabs.css */
+.nav-pills-custom a {
+    color: var(--bs-primary) !important;
+}
+
+.nav-pills-custom a.active {
+    background-color: var(--bs-primary) !important;
+    color: #fff !important;
+}

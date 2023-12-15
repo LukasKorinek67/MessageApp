@@ -1,0 +1,60 @@
+@import "./components/cards.css";
+@import "./custom.scss";
+@import "./color-modes/color-modes.scss";
+@import "./components/chat-window.css";
+@import "./components/chats-column.css";
+@import "./components/main-page.css";
+
+header {
+    padding: 15px 0px 15px 0px;
+    background-color: var(--bs-primary);
+}
+
+#main_h {
+    text-decoration: none;
+}
+
+footer {
+    padding-top: 0px;
+    padding-bottom: 50px;
+}
+
+.main_content {   
+    padding: 30px 20px 80px 20px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+#main_title {
+    padding-bottom: 25px;
+    padding-top: 20px;
+}
+
+h2 {
+    padding-bottom: 25px;
+    padding-top: 20px;
+}
+
+#page404_title {
+    margin-top: 25px;
+}
+
+.content {   
+    padding: 20px 100px 20px 100px;
+}
+
+@media (max-width: 768px) {
+    .text-sm-center {
+        text-align: center;
+    } 
+}
+
+.text-ellipsis {
+    display: inline-block;
+    float: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 190px;
+}
