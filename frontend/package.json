@@ -21,6 +21,7 @@
     "reconnecting-websocket": "^4.4.0",
     "sass": "^1.66.1",
     "usestomp-hook": "^2.0.0",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4",
     "webstomp-client": "^1.2.6"
   },

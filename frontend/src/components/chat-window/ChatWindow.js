@@ -10,23 +10,26 @@ import requestHandler from "../../services/RequestHandler";
 import {useStompClient, useSubscription} from "react-stomp-hooks";
 import dateTimeService from "../../utils/DateTimeUtil";
 import UsersInChatUtil from "../../utils/UsersInChatUtil";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ChatWindow({chat, updateAllChatsFunction, selectedChat}) {
     const {loggedUser} = useContext(LoggedUserContext);
     const [allMessages, setAllMessages] = useState([]);
     const chatWindowRef = useRef(null);
 
-    const destination = process.env.REACT_APP_WEBSOCKET_SUBSCRIPTION_DESTINATION_PREFIX + chat.id;
+    const destination = process.env.REACT_APP_WEBSOCKET_SUBSCRIPTION_DESTINATION_PREFIX + chat.uid;
 
     useSubscription(destination, (message) => {
         message = JSON.parse(message.body);
         if(message.user && message.user.uid === loggedUser.uid) {
             // tady jen projet allMessages a změnit (pravděpodobně se potom bude jednat o to s tím read/unread)
             changeMyMessageReadStatus(message);
+        } else if(message.user && message.user.uid !== loggedUser.uid && message.read === true) {
+            // tady se jedná o read oznámení, který poslal on sám druhýmu uživateli, takže nic nedělat
         } else {
             addMessageToAllMessages(message);
         }
-        updateAllChatsFunction(chat.id, message);
+        updateAllChatsFunction(chat.uid, message);
     });
     const stompClient = useStompClient();
 
@@ -42,7 +45,7 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
     }
 
     useEffect(() => {
-        requestHandler.getChatMessages(loggedUser, user, chat.id).then(
+        requestHandler.getChatMessages(loggedUser.accessToken, chat.uid).then(
             response => {return response.data;}
         ).then(data => {
             setAllMessages(data);
@@ -59,10 +62,14 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
     }, [allMessages]);
 
     useEffect(() => {
-        if(selectedChat === chat.id) {
+        if(selectedChat === chat.uid) {
             // scrollovat dolů
             if (chatWindowRef.current) {
                 chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+            }
+            // pokud není scroll tak poslat že je vše přečteno
+            if(areAllMessagesVisible()){
+                sendLastMessageRead();
             }
         }
     }, [selectedChat]);
@@ -70,10 +77,20 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
     function handleScroll() {
         const { scrollTop, clientHeight, scrollHeight } = chatWindowRef.current;
         if((scrollTop + clientHeight) >= scrollHeight) {
-            //console.log("Jsem úplně dole! - chat " + chat.id);
+            //console.log("Jsem úplně dole! - chat " + chat.uid);
             // tady zavolat, že mám všechny zprávy přečtený!
-            sendLastMessageRead()
+            sendLastMessageRead();
         }
+    }
+
+    function areAllMessagesVisible() {
+        const { scrollTop, clientHeight, scrollHeight } = chatWindowRef.current;
+        if(scrollTop === 0 && clientHeight === scrollHeight) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     useEffect(() => {
@@ -90,10 +107,9 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
 
     function sendLastMessageRead() {
         let message = getLastReceivedMessage();
-        if(message !== null && !message.read) {
-            console.log("Tady ji pošlu aby byla read a taky všechny před ní!");
-            //message.read = true;
-            //sendMessageToWebsocket()
+        if((message !== undefined) && (message.read !== null) && !message.read) {
+            const allUnreadMessages = getAllUnreadMessages();
+            sendMessageStatusReadToWebsocket(allUnreadMessages);
         }
     }
 
@@ -107,7 +123,25 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
                 }
             }
         });
-        return lastReceivedMessage
+        return lastReceivedMessage;
+    }
+
+    function getAllUnreadMessages() {
+        const allMessagesReversed = allMessages.slice().reverse();
+        let unreadMessages = [];
+        allMessagesReversed.map((message, index) => {
+            if(message.user.uid !== loggedUser.uid && !message.read) {
+                unreadMessages.push(message);
+            }
+        });
+        return unreadMessages;
+    }
+
+    function sendMessageStatusReadToWebsocket(messages) {
+        messages.map((message, index) => {
+            message.read = true;
+            sendMessageToWebsocket(message);
+        });
     }
 
     function addMessageToAllMessages(message) {
@@ -118,7 +152,7 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
 
     function sendMessageToWebsocket(message) {
         if(stompClient) {
-            const destination = process.env.REACT_APP_WEBSOCKET_DESTINATION_PREFIX + chat.id;
+            const destination = process.env.REACT_APP_WEBSOCKET_DESTINATION_PREFIX + chat.uid;
             stompClient.publish({
                 destination: destination,
                 body: JSON.stringify(message)
@@ -129,14 +163,8 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
     function changeMyMessageReadStatus(receivedMyMessage) {
         const allMessagesReversed = allMessages.slice().reverse();
         allMessagesReversed.map((message, index) => {
-            // tady by asi bylo ideální id, pokud ho tam přidělám
-            if((message.user.uid === receivedMyMessage.user.uid) &&
-                (message.text === receivedMyMessage.text)) {
-                // tady bych potřeboval zkontrolovat ještě jestli se rovná time, ale to mám teď rozhozený zatím
-                // proto tady trochu zvláštně porovnám ty read stavy, abych eliminoval, že přepíšu read na unread
-                if((message.read === null || message.read === false) && (receivedMyMessage.read !== null)) {
-                    message.read = receivedMyMessage.read;
-                }
+            if(message.uid === receivedMyMessage.uid) {
+                message.read = receivedMyMessage.read;
             }
         });
         //setAllMessages(allMessagesReversed.reverse())
@@ -144,27 +172,16 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
 
     function onMessageSend(messageText) {
         const message = {
+            uid: uuidv4(),
             user: loggedUser,
             text: messageText,
             time: dateTimeService.getDateTime(),
             read: null,
-            chatId: chat.id
+            chatUid: chat.uid
         };
         addMessageToAllMessages(message);
         sendMessageToWebsocket(message);
     };
-
-    // TOHLE PAK SMAZAT!! Jen na test zprávy od druhýho!
-    function testOtherUserSend(messageText) {
-        const message = {
-            user: user,
-            text: messageText,
-            time: dateTimeService.getDateTime(),
-            read: false,
-            chatId: chat.id
-        };
-        sendMessageToWebsocket(message);
-    }
     
     return (
         <>
@@ -174,7 +191,6 @@ export default function ChatWindow({chat, updateAllChatsFunction, selectedChat})
                     <AllMessages allMessages={allMessages} isGroupChat={groupChat}/>
                 </div>
                 <div id="message-box" className="px-2">
-                    <MessageBox onMessageSend={testOtherUserSend}/>
                     <MessageBox onMessageSend={onMessageSend}/>
                 </div>
             </Stack>

@@ -8,19 +8,9 @@ import Footer from "../components/Footer";
 import NewChatButton from "../components/buttons/logo-buttons/NewChatButton";
 import NewGroupChatButton from "../components/buttons/logo-buttons/NewGroupChatButton";
 import Stomp from "../components/websocket/Stomp";
+import requestHandler from "../services/RequestHandler";
 
 export default function MainPage() {
-    function newChat(user) {
-        console.log("New chat with user:");
-        console.log(user);
-    }
-
-    function newGroupChat(users) {
-        console.log("New group chat with users:");
-        console.log(users);
-    }
-
-
     return (
         <>
             <Header/>
@@ -28,18 +18,7 @@ export default function MainPage() {
                 <Card className="pageCard shadow-lg p-3 bg-light rounded">
                 <Container>
                     <div className="content">
-                        <Stack direction="horizontal" gap={2} className="m-2">
-                            <NewChatButton addNewChatFunction={newChat}/>
-                            <NewGroupChatButton addNewGroupChatFunction={newGroupChat}/>
-                        </Stack>
-                        <Card className="bg-light rounded" id="chats-card">
-                            <AllChats/>
-                            {/*<WebSocket />*/}
-                            {/*<WebSocketComponent />*/}
-                            {/*<WebSocketTest />*/}
-                            {/*<Stomp />*/}
-                        </Card>
-
+                        <AllChats/>
                         <div className="card_bottom"></div>
                     </div>
                 </Container>

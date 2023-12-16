@@ -11,9 +11,13 @@ export default function ChatPreviewNameAndTime({ usernameText, lastMessage}) {
                     <div className="fw-semibold">
                         {usernameText}
                     </div>
-                    <div className="fw-lighter small ms-auto" title={dateTimeService.getDateAndTimeString(lastMessage.time)} >
-                        {dateTimeUtil.getChatPreviewTime(lastMessage.time)}
-                    </div>
+                    {lastMessage ?
+                        <div className="fw-lighter small ms-auto" title={dateTimeService.getDateAndTimeString(lastMessage.time)} >
+                            {dateTimeUtil.getChatPreviewTime(lastMessage.time)}
+                        </div>
+                        : <div className="fw-lighter small ms-auto" >
+                        </div>
+                    }
                 </Stack>
             </Row>
         </>

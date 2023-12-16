@@ -29,7 +29,8 @@ export const BUTTON_NEW_GROUP_CHAT_TITLE = "Skupinová konverzace";
 export const MODAL_START_NEW_CHAT = "Založit nový chat";
 export const MODAL_START_GROUP_NEW_CHAT = "Založit nový skupinový chat";
 
-// NewChatM
+// ChatPreview
+export const NO_MESSAGES_YET = "Zatím žádné zprávy";
 
 // MessageBox
 export const BUTTON_SEND_MESSAGE_TITLE = "Poslat zprávu";

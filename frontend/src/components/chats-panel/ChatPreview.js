@@ -13,7 +13,7 @@ export default function ChatPreview({chat}) {
     const {loggedUser} = useContext(LoggedUserContext);
     const lastMessageInChat = chat.lastMessage;
     const [lastMessage, setLastMessage] = useState(lastMessageInChat);
-    const destination = process.env.REACT_APP_WEBSOCKET_SUBSCRIPTION_DESTINATION_PREFIX + chat.id;
+    const destination = process.env.REACT_APP_WEBSOCKET_SUBSCRIPTION_DESTINATION_PREFIX + chat.uid;
     useSubscription(destination, (message) => {
         message = JSON.parse(message.body);
         setLastMessage(message);
@@ -43,9 +43,7 @@ export default function ChatPreview({chat}) {
                             : (groupChat && usersUsernamesText != null) &&
                                 <ChatPreviewNameAndTime usernameText={usersUsernamesText} lastMessage={lastMessage}/>
                         }
-                        {lastMessage &&
-                            <ChatPreviewLastMessage lastMessage={lastMessage} isGroupChat={groupChat} />
-                        }
+                        <ChatPreviewLastMessage lastMessage={lastMessage} isGroupChat={groupChat} />
                     </Col>
                 </Row>
             </Container>

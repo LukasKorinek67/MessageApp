@@ -35,7 +35,6 @@ export default function LoginButton({icon, buttonText, provider, auth}) {
                     uid: user.uid,
                     username: user.displayName,
                     email: user.email,
-                    token: token,
                     accessToken: user.accessToken,
                     provider: user.providerData[0].providerId
                 }

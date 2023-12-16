@@ -6,34 +6,20 @@ class RequestHandler {
         this.url = process.env.REACT_APP_BACKEND_URL;
     }
 
-    getLoggedUser() {
-        const endPoint = "/user";
-        return axios.get(this.url + endPoint);
-    }
-
-    getAllChats(loggedUser) {
-        const token = loggedUser.accessToken;
-        const endPoint = "/allChats";
-        return axios.post(this.url + endPoint, loggedUser, {
+    getAllChats(token) {
+        const endPoint = "/chat/allChats"
+        return axios.get(this.url + endPoint, {
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
             },
         });
     }
 
-    getChatMessages(loggedUser, user, chatId) {
-        const endPoint = "/chatMessages";
-        const token = loggedUser.accessToken;
-        const data = {
-            loggedUser: loggedUser,
-            user: user,
-            chatId: chatId
-        }
-        return axios.post(this.url + endPoint, data, {
+    getChatMessages(token, chatUid) {
+        const endPoint = "/chat/messages/" + chatUid;
+        return axios.get(this.url + endPoint, {
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
         });
     }
@@ -42,7 +28,26 @@ class RequestHandler {
         const endPoint = "/user/allUsers";
         return axios.get(this.url + endPoint, {
             headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
+    }
+
+    addNewChat(token, chat) {
+        const endPoint = "/chat/create";
+        return axios.post(this.url + endPoint, chat, {
+            headers: {
                 'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+
+    getNumberOfUnreadMessages(token, chatUid) {
+        const endPoint = "/chat/messages/unread-number/" + chatUid;
+        return axios.get(this.url + endPoint, {
+            headers: {
+                'Authorization': `Bearer ${token}`
             },
         });
     }
