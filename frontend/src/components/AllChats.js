@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 
-import ChatPreview from "./chats-panel/ChatPreview";
+import ChatPreview from "./chats-preview/ChatPreview";
 import ChatWindow from "./chat-window/ChatWindow";
 import requestHandler from '../services/RequestHandler';
 import * as strings from "../strings/strings";
@@ -83,8 +83,7 @@ export default function AllChats() {
         if(!doesChatAlreadyExist) {
             createNewChat(users);
         } else {
-            // set zvolený chat na existingChatUid
-            console.log("UŽ EXISTUJE");
+            // set zvolený chat na existingChatUid - dodělat!
             setSelectedChat(existingChatUid);
         }
     }

@@ -1,6 +1,6 @@
 package com.korinek.message_app.backend.controller;
 
-import com.korinek.message_app.backend.model.dto.UserDTO;
+import com.korinek.message_app.backend.model.User;
 import com.korinek.message_app.backend.service.FirebaseUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping(path=AppPaths.USER_GET_ALL_USERS_PATH)
-    public ResponseEntity<List<UserDTO>> getAllUsers(Principal principal){
+    public ResponseEntity<List<User>> getAllUsers(Principal principal){
         System.out.println("Principal - getAllUsers():");
         System.out.println(principal.getName());
         return new ResponseEntity<>(this.firebaseUserService.getAllUsers(), HttpStatus.OK);

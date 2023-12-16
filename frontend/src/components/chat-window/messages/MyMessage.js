@@ -34,7 +34,7 @@ export default function MyMessage({ message }) {
                                         {BootstrapIcons.doubleCheck(20,20)}
                                     </div>
                                 : message.read &&
-                                <div className="text-info" title={strings.MESSAGE_STATUS_TITLE_READ}>
+                                <div className="ps-1 text-info" title={strings.MESSAGE_STATUS_TITLE_READ}>
                                     {BootstrapIcons.doubleCheck(20,20)}
                                 </div> }
                             </Stack>

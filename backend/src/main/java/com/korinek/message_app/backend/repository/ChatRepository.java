@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface ChatRepository extends MongoRepository<Chat, Integer> {
     Chat findByUid(String uid);
-    @Query("{'usersUids': ?0}")
+    @Query("{'users.uid': ?0}")
     List<Chat> findByUsersUid(String userUid);
 }

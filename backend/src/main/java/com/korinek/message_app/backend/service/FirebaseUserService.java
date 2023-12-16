@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.ListUsersPage;
 import com.google.firebase.auth.UserRecord;
-import com.korinek.message_app.backend.model.dto.UserDTO;
+import com.korinek.message_app.backend.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,12 +13,12 @@ import java.util.List;
 @Service
 public class FirebaseUserService {
 
-    public List<UserDTO> getAllUsers() {
-        List<UserDTO> allUsers = new ArrayList<>();
+    public List<User> getAllUsers() {
+        List<User> allUsers = new ArrayList<>();
         try {
             ListUsersPage page = FirebaseAuth.getInstance().listUsers(null);
             for (UserRecord userRecord : page.getValues()) {
-                allUsers.add(this.getUserDTOFromUserRecord(userRecord));
+                allUsers.add(this.getUserFromUserRecord(userRecord));
             }
         } catch(FirebaseAuthException e) {
             e.printStackTrace();
@@ -26,10 +26,10 @@ public class FirebaseUserService {
         return allUsers;
     }
 
-    public UserDTO getUserByUid(String uid) {
+    public User getUserByUid(String uid) {
         try {
             UserRecord userRecord = FirebaseAuth.getInstance().getUser(uid);
-            UserDTO user = this.getUserDTOFromUserRecord(userRecord);
+            User user = this.getUserFromUserRecord(userRecord);
             return user;
         } catch(FirebaseAuthException e) {
             e.printStackTrace();
@@ -37,8 +37,8 @@ public class FirebaseUserService {
         }
     }
 
-    private UserDTO getUserDTOFromUserRecord(UserRecord userRecord) {
-        return new UserDTO(
+    private User getUserFromUserRecord(UserRecord userRecord) {
+        return new User(
                 userRecord.getUid(),
                 userRecord.getDisplayName(),
                 userRecord.getEmail(),

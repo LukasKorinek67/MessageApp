@@ -24,10 +24,23 @@ export default function ChatPreviewLastMessage({lastMessage, isGroupChat}) {
         }
     }, [lastMessage]);
 
+    function getTitleForUnreadMessages() {
+        switch(numberOfUnread) {
+            case 1:
+                return numberOfUnread + " " + strings.TITLE_UNREAD_MESSAGES_ONE;
+            case 2:
+                return numberOfUnread + " " + strings.TITLE_UNREAD_MESSAGES_TWO_TO_FOUR;
+            case 3:
+                return numberOfUnread + " " + strings.TITLE_UNREAD_MESSAGES_TWO_TO_FOUR;
+            case 4:
+                return numberOfUnread + " " + strings.TITLE_UNREAD_MESSAGES_TWO_TO_FOUR;
+            default:
+                return numberOfUnread + " " + strings.TITLE_UNREAD_MESSAGES_MORE;
+        }
+    }
+
     return (
         <>
-
-            {/*console.log(numberOfUnread)*/}
             {
                 !lastMessage ?
                     <Row className="fw-italic fw-lighter small text-ellipsis">{strings.NO_MESSAGES_YET}</Row>
@@ -53,7 +66,7 @@ export default function ChatPreviewLastMessage({lastMessage, isGroupChat}) {
                     <Row className="fw-bold">
                         <Stack direction="horizontal" gap={1} className="ps-0">
                             <div className="text-ellipsis">{lastMessage.text}</div>
-                            <div className="ms-auto me-0"><span className="badge rounded-pill text-bg-info small">{numberOfUnread}</span></div>
+                            <div className="ms-auto me-0"><span className="badge rounded-pill text-bg-info small" title={getTitleForUnreadMessages()}>{numberOfUnread}</span></div>
                         </Stack>
                     </Row>
                 : (lastMessage.user.uid !== loggedUser.uid && isGroupChat && lastMessage.read) ?
@@ -64,7 +77,7 @@ export default function ChatPreviewLastMessage({lastMessage, isGroupChat}) {
                     <Row className="fw-semibold">
                         <Stack direction="horizontal" gap={1} className="ps-0">
                             <div className="text-ellipsis">{lastMessage.user.username}: {lastMessage.text}</div>
-                            <div className="ms-auto me-0"><span className="badge rounded-pill text-bg-info small">{numberOfUnread}</span></div>
+                            <div className="ms-auto me-0"><span className="badge rounded-pill text-bg-info small" title={getTitleForUnreadMessages()}>{numberOfUnread}</span></div>
                         </Stack>
                     </Row>
             }

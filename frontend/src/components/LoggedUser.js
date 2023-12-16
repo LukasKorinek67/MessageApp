@@ -22,7 +22,7 @@ export default function LoggedUser() {
     return (
         <>
             <DropdownButton variant="outline-light" title={<UserInfo loggedUser={loggedUser}/>}>
-                <Dropdown.Item eventKey="2" onClick={logout}>{strings.LOGOUT}</Dropdown.Item>
+                <Dropdown.Item eventKey="1" onClick={logout}>{strings.LOGOUT}</Dropdown.Item>
             </DropdownButton>
         </>
     );
@@ -33,12 +33,12 @@ function UserInfo({ loggedUser }) {
       <>
           {(loggedUser.provider == "google.com") &&
               <>
-                {BootstrapIcons.googleIcon(22,22)}&nbsp;&nbsp;{loggedUser.username}
+                {BootstrapIcons.googleIcon(23,23)}&nbsp;&nbsp;{loggedUser.username}
               </>
           }
           {(loggedUser.provider == "facebook.com") &&
               <>
-                  {BootstrapIcons.facebookIcon(22,22)}&nbsp;&nbsp;{loggedUser.username}
+                  {BootstrapIcons.facebookIcon(23,23)}&nbsp;&nbsp;{loggedUser.username}
               </>
           }
           {(loggedUser.provider != "google.com" && loggedUser.provider != "facebook.com") &&

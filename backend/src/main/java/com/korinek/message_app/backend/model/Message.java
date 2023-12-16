@@ -1,6 +1,5 @@
 package com.korinek.message_app.backend.model;
 
-import com.korinek.message_app.backend.model.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -15,7 +14,7 @@ public class Message {
 
     @Id
     private String uid;
-    private String senderUid;
+    private User user;
     private String text;
     private LocalDateTime time;
     private boolean read;

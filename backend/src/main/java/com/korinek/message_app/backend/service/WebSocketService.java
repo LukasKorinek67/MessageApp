@@ -1,6 +1,6 @@
 package com.korinek.message_app.backend.service;
 
-import com.korinek.message_app.backend.model.dto.MessageDTO;
+import com.korinek.message_app.backend.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class WebSocketService {
         this.messageService = messageService;
     }
 
-    public void messageReceived(String chatUid, MessageDTO message) {
+    public void messageReceived(String chatUid, Message message) {
         // pokud není přečtená - uložit do databáze
         if(!message.isRead()) {
             System.out.println("Tuhle uložim:");

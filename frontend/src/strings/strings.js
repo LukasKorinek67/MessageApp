@@ -31,6 +31,9 @@ export const MODAL_START_GROUP_NEW_CHAT = "Založit nový skupinový chat";
 
 // ChatPreview
 export const NO_MESSAGES_YET = "Zatím žádné zprávy";
+export const TITLE_UNREAD_MESSAGES_ONE = "nepřečtená zpráva";
+export const TITLE_UNREAD_MESSAGES_TWO_TO_FOUR = "nepřečtené zprávy";
+export const TITLE_UNREAD_MESSAGES_MORE = "nepřečtených zpráv";
 
 // MessageBox
 export const BUTTON_SEND_MESSAGE_TITLE = "Poslat zprávu";

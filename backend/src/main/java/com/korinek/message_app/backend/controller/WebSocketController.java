@@ -1,15 +1,12 @@
 package com.korinek.message_app.backend.controller;
 
-import com.korinek.message_app.backend.model.dto.MessageDTO;
-import com.korinek.message_app.backend.service.ChatService;
+import com.korinek.message_app.backend.model.Message;
 import com.korinek.message_app.backend.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-
-import java.security.Principal;
 
 @Controller
 public class WebSocketController {
@@ -23,7 +20,7 @@ public class WebSocketController {
 
     @MessageMapping("/chat/{uid}")
     @SendTo("/topic/messages/{uid}")
-    public MessageDTO sendMessage(@DestinationVariable String uid, MessageDTO message) {
+    public Message sendMessage(@DestinationVariable String uid, Message message) {
         // jen pro simulaci
         try{
             Thread.sleep(500);
