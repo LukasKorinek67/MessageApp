@@ -1,7 +1,7 @@
 package com.korinek.message_app.backend.controller;
 
 import com.korinek.message_app.backend.model.dto.UserDTO;
-import com.korinek.message_app.backend.service.UserService;
+import com.korinek.message_app.backend.service.FirebaseUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,22 +15,17 @@ import java.util.List;
 @RestController
 @RequestMapping(path="api")
 public class UserController {
-    private final UserService userService;
+    private final FirebaseUserService firebaseUserService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(FirebaseUserService firebaseUserService) {
+        this.firebaseUserService = firebaseUserService;
     }
-
-    /*@GetMapping(path=AppPaths.USER_GET_ALL_USERS_PATH)
-    public ResponseEntity<List<UserDTO>> getAllUsers(){
-        return new ResponseEntity<>(this.userService.getAllUsers(), HttpStatus.OK);
-    }*/
 
     @GetMapping(path=AppPaths.USER_GET_ALL_USERS_PATH)
     public ResponseEntity<List<UserDTO>> getAllUsers(Principal principal){
         System.out.println("Principal - getAllUsers():");
         System.out.println(principal.getName());
-        return new ResponseEntity<>(this.userService.getAllUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(this.firebaseUserService.getAllUsers(), HttpStatus.OK);
     }
 }

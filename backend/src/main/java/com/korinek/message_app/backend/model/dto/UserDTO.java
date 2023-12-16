@@ -9,8 +9,5 @@ public class UserDTO {
     private String uid;
     private String username;
     private String email;
-    // odebrat token a accessToken
-    private String token;
-    private String accessToken;
     private String provider;
 }

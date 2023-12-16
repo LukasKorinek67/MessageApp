@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class ChatDTO {
-    private int id;
+    private String uid;
     private List<UserDTO> users;
     private MessageDTO lastMessage;
 }

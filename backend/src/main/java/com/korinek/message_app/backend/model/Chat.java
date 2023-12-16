@@ -1,22 +1,20 @@
 package com.korinek.message_app.backend.model;
 
 import com.korinek.message_app.backend.model.dto.MessageDTO;
-import com.korinek.message_app.backend.model.dto.UserDTO;
-//import jakarta.persistence.Column;
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-/*
-@Entity
+
+@AllArgsConstructor
+@Data
+@Document(collection = "chats")
 public class Chat {
-
     @Id
-    @Column(name = "id_chat")
-    private int id;
-    private List<UserDTO> users;
+    private String uid;
+    private List<String> usersUids;
     private MessageDTO lastMessage;
-}*/
-
-public class Chat {}
+}

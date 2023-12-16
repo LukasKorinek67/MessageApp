@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class MessageDTO {
+    private String uid;
     private UserDTO user;
     private String text;
     private LocalDateTime time;
     private boolean read;
-    private int chatId;
+    private String chatUid;
 }

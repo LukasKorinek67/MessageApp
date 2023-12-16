@@ -7,14 +7,19 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: https://www.googleapis.com/service_accounts/v1/jwk/securetoken%40system.gserviceaccount.com
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/message-app-mongodb
+      database: message-app
 
-logging:
-  level:
-    org:
-      springframework:
-        web:
-          socket: DEBUG
-        messaging: TRACE
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        web:
+#          socket: DEBUG
+#        messaging: TRACE
 
 
 

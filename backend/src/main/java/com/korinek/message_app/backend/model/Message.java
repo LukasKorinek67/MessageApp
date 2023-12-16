@@ -1,28 +1,23 @@
 package com.korinek.message_app.backend.model;
 
 import com.korinek.message_app.backend.model.dto.UserDTO;
-//import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-/*
-@Entity
+@AllArgsConstructor
+@Data
+@Document(collection = "messages")
 public class Message {
 
     @Id
-    @Column(name = "id_message")
-    private int id;
-    @ManyToOne
-    @JoinColumn(name="id_user")
-    private User user;
-    @Column
+    private String uid;
+    private String senderUid;
     private String text;
-    @Column
     private LocalDateTime time;
-    @Column
     private boolean read;
-    @Column
-    private int chatId;
-}*/
-
-public class Message {}
+    private String chatUid;
+}

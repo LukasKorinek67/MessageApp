@@ -1,11 +1,16 @@
 package com.korinek.message_app.backend.repository;
 
 import com.korinek.message_app.backend.model.Chat;
-//import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-/*@Repository
-public interface ChatRepository extends JpaRepository<Chat, Integer> {
-}*/
+import java.util.List;
 
-public class ChatRepository {}
+
+@Repository
+public interface ChatRepository extends MongoRepository<Chat, Integer> {
+    Chat findByUid(String uid);
+    @Query("{'usersUids': ?0}")
+    List<Chat> findByUsersUid(String userUid);
+}
