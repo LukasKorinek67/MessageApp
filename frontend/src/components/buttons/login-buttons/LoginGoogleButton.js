@@ -1,8 +1,8 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import {auth} from "../../../config/firebase";
+import {auth} from "../../../config/firebase.js";
 import BootstrapIcons from "../../../utils/BootstrapIcons";
 import LoginButton from "./LoginButton";
-import * as strings from "../../../strings/strings";
+import * as strings from "../../../strings/strings.js";
 
 
 export default function LoginGoogleButton() {
