@@ -1,7 +1,8 @@
 package com.korinek.message_app.backend.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONException;
+//import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.json.JSONException;
 import org.springframework.stereotype.Component;
 
 @Component
