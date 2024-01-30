@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import {auth} from "../../../config/firebase.js";
+import {auth} from "../../../config/firebase";
 import BootstrapIcons from "../../../utils/BootstrapIcons";
 import LoginButton from "./LoginButton";
 import * as strings from "../../../strings/strings.js";
