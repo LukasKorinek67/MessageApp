@@ -2,7 +2,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import BootstrapIcons from "../../../utils/BootstrapIcons";
 import LoginButton from "./LoginButton";
 import * as strings from "../../../strings/strings.js";
-import firebase from "../../../config/firebase.js";
+import auth from "../../../configuration/firebase";
 
 
 export default function LoginGoogleButton() {
@@ -58,7 +58,7 @@ export default function LoginGoogleButton() {
                 icon={BootstrapIcons.googleIcon(25,25)}
                 buttonText={strings.LOGIN_BUTTON_GOOGLE}
                 provider={googleAuthProvider}
-                auth={firebase}
+                auth={auth}
             />
         </>
     );
