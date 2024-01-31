@@ -32,6 +32,9 @@ public class FirebaseConfiguration {
             e.printStackTrace();
         }
 
+        System.out.println("-------------------------------");
+        System.out.println("JSON Content:");
+        System.out.println(jsonContent);
         try (InputStream serviceAccount = new ByteArrayInputStream(jsonContent.getBytes());) {
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
