@@ -5,7 +5,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.json.JSONException;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,9 +31,6 @@ public class FirebaseConfiguration {
             e.printStackTrace();
         }
 
-        System.out.println("-------------------------------");
-        System.out.println("JSON Content:");
-        System.out.println(jsonContent);
         try (InputStream serviceAccount = new ByteArrayInputStream(jsonContent.getBytes());) {
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
