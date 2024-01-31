@@ -37,7 +37,7 @@ public class FirebaseConfigurationResource {
             "type": "%s",
             "project_id": "%s",
             "private_key_id": "%s",
-            "private_key": %s,
+            "private_key": "%s",
             "client_email": "%s",
             "client_id": "%s",
             "auth_uri": "%s",
